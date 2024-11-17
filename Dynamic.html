@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Rating System</title>
+    <style>
+        /* Center the rating component */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #0d6378;
+        }
+        
+        /* Rating Container */
+        .rating-container {
+            text-align: center;
+            background-color:rgb(235, 103, 134);
+            width: 300px;
+        }
+
+        /* Rating Stars */
+        .rating {
+            display: inline-flex;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .star {
+            font-size: 3rem;
+            color: lightgray;
+            transition: color 0.2s ease;
+        }
+
+        .star.highlighted {
+            color: gold;
+        }
+
+        /* Selected rating display */
+        .selected-rating {
+            margin-top: 10px;
+            font-size: 2rem;
+            color: #1b1919;
+        }
+    </style>
+</head>
+<body>
+    <div class="rating-container">
+        <!-- Rating Stars -->
+        <div class="rating">
+            <span class="star" data-value="1">★</span>
+            <span class="star" data-value="2">★</span>
+            <span class="star" data-value="3">★</span>
+            <span class="star" data-value="4">★</span>
+            <span class="star" data-value="5">★</span>
+        </div>
+        <!-- Display Selected Rating -->
+        <div class="selected-rating" id="selectedRating">Rating: 0</div>
+    </div>
+
+    <script>
+        // JavaScript to handle the rating system
+        const stars = document.querySelectorAll('.star');
+        const selectedRatingText = document.getElementById('selectedRating');
+        let selectedRating = 0;
+
+        stars.forEach((star, index) => {
+            // Highlight stars up to hovered index
+            star.addEventListener('mouseover', () => highlightStars(index));
+            
+            // Reset to selected rating on mouse leave
+            star.addEventListener('mouseleave', () => highlightStars(selectedRating - 1));
+            
+            // Set selected rating on click
+            star.addEventListener('click', () => {
+                selectedRating = index + 1;
+                highlightStars(index);
+                selectedRatingText.textContent = `Rating: ${selectedRating}`;
+            });
+        });
+
+        // Function to highlight stars up to the given index
+        function highlightStars(index) {
+            stars.forEach((star, i) => {
+                star.classList.toggle('highlighted', i <= index);
+            });
+        }
+    </script>
+</body>
+</html>
